@@ -1,4 +1,6 @@
 import { TransactionExplorerTable } from "@/components/transaction-explorer-table";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 import { ETHERSCAN_USDT_TRANSACTIONS_ENDPOINT } from "@/lib/constants";
 
 export default async function Home() {
@@ -14,8 +16,22 @@ export default async function Home() {
 
   return (
     <>
-      <div className="hero h-[35vh] flex items-center justify-center text-white">
+      <div className="hero h-[35vh] flex flex-col gap-5 items-center justify-center text-white">
         <h1 className="text-3xl font-medium">USDT Transaction Explorer</h1>
+        <div className="text-sm flex gap-5">
+          <p>
+            <span className="font-medium">PRICE</span> $1.00{" "}
+            <span className="text-green-400">(+0.09%)</span>
+          </p>
+          <p>
+            <span className="font-medium">ONCHAIN MARKET CAP</span>
+            $50,998,658,367.64
+          </p>
+          <p>
+            <span className="font-medium">CIRCULATING SUPPLY MARKET CAP</span>
+            $110,987,088,240.00
+          </p>
+        </div>
       </div>
       <main className="max-w-5xl w-[90%] mx-auto mb-10 bg-white -mt-20 rounded-2xl shadow-xl p-10 pb-0">
         <b>Latest Transactions</b>
