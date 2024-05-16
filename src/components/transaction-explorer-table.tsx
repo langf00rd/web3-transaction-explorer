@@ -43,58 +43,7 @@ import { truncateAddress } from "@/lib/utils";
 import moment from "moment";
 import { FileText } from "lucide-react";
 import { Transaction } from "@/lib/types";
-
-const data: Transaction[] = [
-  {
-    hash: "0x29d3f03bcd2d6099f962df834640c8a91fbba3900c3a9c9dc5896d55c26d486a",
-    to: "0x9ef1c9627e6a730a988c56a4a71edb3d280a07dc",
-    value: "1995000000",
-    timeStamp: "1715832059",
-    from: "0xdfd5293d8e347dfe59e90efd55b2956a1343963d",
-  },
-  {
-    hash: "0x0d0cd264464ce1ce83b3ba547ff15ffbdbaf1fb1d8c1570cb57b78dee76cd5bf",
-    to: "0x9ef1c9627e6a730a988c56a4a71edb3d280a07dc",
-    value: "1995000000",
-    timeStamp: "1715832359",
-    from: "0xdfd5293d8e347dfe59e90efd55b2956a1343963d",
-  },
-  {
-    hash: "0x04537902ea05e1ba046a056e5d4ac13444fc2e6d1f2f99d39978163ef69702a2",
-    to: "0x9ef1c9627e6a730a988c56a4a71edb3d280a07dc",
-    value: "1995000000",
-    timeStamp: "1715832359",
-    from: "0xdfd5293d8e347dfe59e90efd55b2956a1343963d",
-  },
-  {
-    hash: "0xa1efc87b91aafed2293bdf40e2203ebd6f1602f187ad7aaf5a7946f9ad730c7e",
-    to: "0x9ef1c9627e6a730a988c56a4a71edb3d280a07dc",
-    value: "1995000000",
-    timeStamp: "1715832335",
-    from: "0xdfd5293d8e347dfe59e90efd55b2956a1343963d",
-  },
-  {
-    hash: "0x29d3f03bcd2d6099f962df834640c8a91fbba3900c3a9c9dc5896d55c26d486a",
-    to: "0x9ef1c9627e6a730a988c56a4a71edb3d280a07dc",
-    value: "1995000000",
-    timeStamp: "1715832335",
-    from: "0xdfd5293d8e347dfe59e90efd55b2956a1343963d",
-  },
-  {
-    hash: "0x29d3f03bcd2d6099f962df834640c8a91fbba3900c3a9c9dc5896d55c26d486a",
-    to: "0x9ef1c9627e6a730a988c56a4a71edb3d280a07dc",
-    value: "1995000000",
-    timeStamp: "1715832335",
-    from: "0xdfd5293d8e347dfe59e90efd55b2956a1343963d",
-  },
-  {
-    hash: "0x29d3f03bcd2d6099f962df834640c8a91fbba3900c3a9c9dc5896d55c26d486a",
-    to: "0x9ef1c9627e6a730a988c56a4a71edb3d280a07dc",
-    value: "1995000000",
-    timeStamp: "1715832335",
-    from: "0xdfd5293d8e347dfe59e90efd55b2956a1343963d",
-  },
-];
+import { toast } from "./ui/use-toast";
 
 export const columns: ColumnDef<Transaction>[] = [
   {
@@ -161,35 +110,49 @@ export const columns: ColumnDef<Transaction>[] = [
     header: "Amount",
     cell: ({ row }) => <div>{row.getValue("value")}</div>,
   },
-  // {
-  //   id: "actions",
-  //   enableHiding: false,
-  //   cell: ({ row }) => {
-  //     const payment = row.original;
+  {
+    id: "actions",
+    enableHiding: false,
+    cell: ({ row }) => {
+      const transaction = row.original;
 
-  //     return (
-  //       <DropdownMenu>
-  //         <DropdownMenuTrigger asChild>
-  //           <Button variant="ghost" className="h-8 w-8 p-0">
-  //             <span className="sr-only">Open menu</span>
-  //             <DotsHorizontalIcon className="h-4 w-4" />
-  //           </Button>
-  //         </DropdownMenuTrigger>
-  //         <DropdownMenuContent align="end">
-  //           <DropdownMenuLabel>Actions</DropdownMenuLabel>
-  //           <DropdownMenuItem
-  //             onClick={() => navigator.clipboard.writeText(payment.id)}
-  //           >
-  //             Copy payment ID
-  //           </DropdownMenuItem>
-  //           <DropdownMenuSeparator />
-  //           <DropdownMenuItem>View customer</DropdownMenuItem>
-  //           <DropdownMenuItem>View payment details</DropdownMenuItem>
-  //         </DropdownMenuContent>
-  //       </DropdownMenu>
-  //     );
-  //   },
-  // },
+      function copyTextToClipboard(text: string) {
+        navigator.clipboard.writeText(text);
+        toast({
+          title: "Copied!",
+        });
+      }
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <DotsHorizontalIcon className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem
+              onClick={() => copyTextToClipboard(transaction.hash)}
+            >
+              Copy hash
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => copyTextToClipboard(transaction.from)}
+            >
+              Copy from address
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => copyTextToClipboard(transaction.to)}
+            >
+              Copy to address
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
+  },
 ];
 
 export function TransactionExplorerTable(props: { data: Transaction[] }) {
@@ -224,10 +187,10 @@ export function TransactionExplorerTable(props: { data: Transaction[] }) {
     <div className="w-full">
       <div className="flex items-center py-4">
         <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
+          placeholder="Filter hash..."
+          value={(table.getColumn("hash")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
+            table.getColumn("hash")?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
         />
