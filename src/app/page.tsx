@@ -1,6 +1,4 @@
 import { TransactionExplorerTable } from "@/components/transaction-explorer-table";
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { ETHERSCAN_USDT_TRANSACTIONS_ENDPOINT } from "@/lib/constants";
 
 export default async function Home() {
