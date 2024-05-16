@@ -14,27 +14,33 @@ export default async function Home() {
 
   return (
     <>
-      <div className="hero h-[40vh] md:h-[35vh] flex flex-col gap-5 items-center justify-center text-white">
-        <h1 className="text-3xl font-medium">USDT Transaction Explorer</h1>
-        <div className="text-sm px-10 flex-wrap flex gap-5 opacity-80">
-          <p>
-            <span className="font-medium">PRICE</span> $1.00
-            <span className="text-green-400">(+0.09%)</span>
-          </p>
-          <p>
-            <span className="font-medium">ONCHAIN MARKET CAP</span>
-            $50,998,658,367.64
-          </p>
-          <p>
-            <span className="font-medium">CIRCULATING SUPPLY MARKET CAP</span>
-            $110,987,088,240.00
-          </p>
-        </div>
-      </div>
+      <Hero />
       <main className="max-w-5xl w-[90%] mx-auto mb-10 bg-white -mt-20 rounded-2xl shadow-xl p-10 pb-0">
         <b>Latest Transactions</b>
         <TransactionExplorerTable data={responseData.result} />
       </main>
     </>
+  );
+}
+
+function Hero() {
+  return (
+    <div className="hero h-[40vh] md:h-[35vh] flex flex-col gap-5 items-center justify-center text-white">
+      <h1 className="text-3xl font-medium">USDT Transaction Explorer</h1>
+      <div className="text-sm px-10 flex-wrap flex gap-5 opacity-80">
+        <p>
+          <span className="font-medium">PRICE</span> $1.00
+          <span className="text-green-400">(+0.09%)</span>
+        </p>
+        <p>
+          <span className="font-medium">ONCHAIN MARKET CAP</span>
+          $50,998,658,367.64
+        </p>
+        <p>
+          <span className="font-medium">CIRCULATING SUPPLY MARKET CAP</span>
+          $110,987,088,240.00
+        </p>
+      </div>
+    </div>
   );
 }
