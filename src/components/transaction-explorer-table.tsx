@@ -85,6 +85,7 @@ export const columns: ColumnDef<Transaction>[] = [
       </div>
     ),
   },
+  { accessorKey: "blockNumber", header: "Block" },
   {
     accessorKey: "wallets",
     header: "Wallets",
