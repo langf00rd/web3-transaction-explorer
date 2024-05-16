@@ -1,6 +1,5 @@
 "use client";
 
-import * as React from "react";
 import {
   CaretSortIcon,
   ChevronDownIcon,
@@ -18,6 +17,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import * as React from "react";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -27,7 +27,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
@@ -39,10 +38,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { truncateAddress } from "@/lib/utils";
-import moment from "moment";
-import { FileText } from "lucide-react";
 import { Transaction } from "@/lib/types";
+import { truncateAddress } from "@/lib/utils";
+import { FileText } from "lucide-react";
+import moment from "moment";
 import { toast } from "./ui/use-toast";
 
 export const columns: ColumnDef<Transaction>[] = [
@@ -107,7 +106,18 @@ export const columns: ColumnDef<Transaction>[] = [
   },
   {
     accessorKey: "value",
-    header: "Amount",
+    // header: "Amount",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Amount
+          <CaretSortIcon className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => <div>{row.getValue("value")}</div>,
   },
   {
@@ -221,7 +231,7 @@ export function TransactionExplorerTable(props: { data: Transaction[] }) {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="rounded-md border">
+      <div className="rounded-md border bg-white">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
