@@ -67,6 +67,7 @@ export const columns: ColumnDef<Transaction>[] = [
     enableSorting: false,
     enableHiding: false,
   },
+
   {
     accessorKey: "hash",
     header: "Hash",
@@ -79,7 +80,7 @@ export const columns: ColumnDef<Transaction>[] = [
           <p className="text-primary">
             {truncateAddress(row.getValue("hash"))}
           </p>
-          <p>{moment(Number(row.original.timeStamp)).fromNow()}</p>
+          <p>{moment(Number(row.original.timeStamp) * 1000).fromNow()}</p>
         </div>
       </div>
     ),
