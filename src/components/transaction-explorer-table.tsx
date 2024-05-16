@@ -88,7 +88,7 @@ export const columns: ColumnDef<Transaction>[] = [
     accessorKey: "wallets",
     header: "Wallets",
     cell: ({ row }) => (
-      <div className="space-y-1">
+      <div className="space-y-1 whitespace-nowrap">
         <p>
           From:{" "}
           <span className="text-primary">
@@ -106,7 +106,6 @@ export const columns: ColumnDef<Transaction>[] = [
   },
   {
     accessorKey: "value",
-    // header: "Amount",
     header: ({ column }) => {
       return (
         <Button
