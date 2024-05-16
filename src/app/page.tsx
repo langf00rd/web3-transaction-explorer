@@ -2,11 +2,15 @@ import { TransactionExplorerTable } from "@/components/transaction-explorer-tabl
 import { ETHERSCAN_USDT_TRANSACTIONS_ENDPOINT } from "@/lib/constants";
 
 export default async function Home() {
-  const response = await fetch(ETHERSCAN_USDT_TRANSACTIONS_ENDPOINT).then(
-    (res) => res.json(),
-  );
+  /** query the latest transactions from the etherscan USDT contract via the API */
+  const response = await fetch(ETHERSCAN_USDT_TRANSACTIONS_ENDPOINT);
+  const responseData = await response.json();
 
-  if (response.status != "1") throw Error(response.result);
+  /** if fetch request throws an invalid status, throw an error
+   * the error.tsx file will catch and display the error in the browser
+   * any other type of error from the fetch request will be also be caught by the error.tsx file
+   */
+  if (responseData.status != "1") throw Error(responseData.result);
 
   return (
     <>
@@ -15,7 +19,7 @@ export default async function Home() {
       </div>
       <main className="max-w-5xl w-[90%] mx-auto mb-10 bg-white -mt-20 rounded-2xl shadow-xl p-10 pb-0">
         <b>Latest Transactions</b>
-        <TransactionExplorerTable data={response.result ?? []} />
+        <TransactionExplorerTable data={responseData.result} />
       </main>
     </>
   );

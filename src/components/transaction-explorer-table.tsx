@@ -39,10 +39,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Transaction } from "@/lib/types";
-import { truncateAddress } from "@/lib/utils";
+import { copyTextToClipboard, truncateAddress } from "@/lib/utils";
 import { FileText } from "lucide-react";
 import moment from "moment";
-import { toast } from "./ui/use-toast";
 
 export const columns: ColumnDef<Transaction>[] = [
   {
@@ -140,13 +139,6 @@ export const columns: ColumnDef<Transaction>[] = [
     cell: ({ row }) => {
       const transaction = row.original;
 
-      function copyTextToClipboard(text: string) {
-        navigator.clipboard.writeText(text);
-        toast({
-          title: "Copied!",
-        });
-      }
-
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -160,7 +152,7 @@ export const columns: ColumnDef<Transaction>[] = [
             <DropdownMenuItem
               onClick={() => copyTextToClipboard(transaction.hash)}
             >
-              Copy hash
+              Copy transaction hash
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => copyTextToClipboard(transaction.from)}
